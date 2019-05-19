@@ -121,7 +121,11 @@ class Renderer {
         throws IOException {
         List<Path> exportedPaths = new ArrayList<>();
 
-        Enumeration<URL> resources = ClassLoader.getSystemClassLoader().getResources(sourceFolder);
+        //This line caused trouble on my windows system.
+        //Example commandline for execution:
+        //  mvn -e exec:java -DaddResourcesToClasspath=true -Dexec.mainClass="SkeletonMain" -Dexec.classpathScope="test"
+        //Enumeration<URL> resources = ClassLoader.getSystemClassLoader().getResources(sourceFolder);
+        Enumeration<URL> resources = Renderer.class.getClassLoader().getResources(sourceFolder);
         while (resources.hasMoreElements()) {
             URL url = resources.nextElement();
             if (url == null) {
